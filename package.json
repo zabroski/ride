@@ -2,9 +2,13 @@
   "name": "ride",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:init": "dropdb --if-exists express_auth_db && createdb express_auth_db",
+    "db:reset": "node ./scripts/resetDb.js",
+    "db:seed": "node ./scripts/seedDb.js"
   },
   "repository": {
     "type": "git",
