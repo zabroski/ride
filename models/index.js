@@ -4,11 +4,14 @@ const bcrypt = require('bcrypt')
 
 // connection to the database
 const db = new Sequelize({
-  database: "express_auth_db",
+  database: "express_auth_db_ride",
   dialect: 'postgres'
 })
 
 const User = UserModel(db, Sequelize);
+// User.hasMany()
+
+
 
 User.beforeCreate(async (user, options) => {
     const hashedPassword = await bcrypt.hash(

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:init": "dropdb --if-exists express_auth_db && createdb express_auth_db",
+    "db:init": "dropdb --if-exists express_auth_db_ride && createdb express_auth_db_ride",
     "db:reset": "node ./scripts/resetDb.js",
     "db:seed": "node ./scripts/seedDb.js"
   },

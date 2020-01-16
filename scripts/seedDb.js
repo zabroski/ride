@@ -5,7 +5,7 @@ const seedDb = async () => {
   try {
     await User.destroy({
       where: {}
-    })
+    });
 
     await User.create({
       name: "Raye Zabre",
