@@ -14,10 +14,10 @@ const apiClient = axios.create({
 export const login = async (data) => {
     try {
         const response = await apiClient.post('/auth/login', data)
-        const { token, user } = response.data
+        const { token, driver } = response.data
 
         localStorage.setItem('token', token)
-        return user
+        return driver
 
     } catch(e) {
         throw e
@@ -27,10 +27,10 @@ export const login = async (data) => {
 export const signUp = async (data) => {
     try {
         const response = await apiClient.post('/auth/signup', data)
-        const { token, user } = response.data
+        const { token, driver } = response.data
 
         localStorage.setItem('token', token)
-        return user
+        return driver;
 
     } catch(e) {
         throw e
@@ -40,9 +40,9 @@ export const signUp = async (data) => {
 export const getProfile = async ()=> {
     try {
         const response = await apiClient.get('/app/profile')
-        const {user} = response.data
+        const {driver} = response.data
 
-        return user
+        return driver;
 
     } catch(e) {
         throw e

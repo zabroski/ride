@@ -28,6 +28,7 @@ class App extends React.Component {
 
       this.setState(state => {
         return {
+          ...state,
           isSignedIn: authService.isAuthenticated(),
           user: fetchUser
         }
@@ -45,8 +46,9 @@ loginUser = async (credentials) => {
 
     this.setState(state => {
       return {
+        ...state,
         isSignedIn: true,
-        user: user
+        // user: user
       }
     })
   }

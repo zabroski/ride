@@ -4,33 +4,38 @@ const { passport , jwtSign} = require('../auth/auth.js')
 
 
 authRouter.post('/login', (req, res, next) => {
-  passport.authenticate('login', async (err, user, info) => {
+  passport.authenticate('login', async (err, driver, info) => {
+
+
     try {
-      if (err || !user) {
-       
+      if (err || !driver) {
+        console.log("THERE <----");
         const error = new Error(error)
         return next(error)
       }
 
-      req.login(user, { session: false }, async (error) => {
+      req.login(driver, { session: false }, async (error) => {
+        console.log("YO <----");
         if (error) {
+          console.log("AAAA <----");
           return next(error)
         }
 
-        const { email, id } = user
+        const { email, id } = driver;
         const payload = {email, id}
         const token = jwtSign(payload)
 
-        return res.json({ user, token })
+        return res.json({ driver, token })
       })
     } catch (error) {
+      console.log("BOOM <----");
       return next(error)
     }
   })(req, res, next)
 })
 
 authRouter.post('/signup', async (req, res, next) => {
-  passport.authenticate('signup' , async (err, user, info) => {
+  passport.authenticate('signup' , async (err, driver, info) => {
     try {
       if (err) {
         console.log(info)
@@ -38,18 +43,18 @@ authRouter.post('/signup', async (req, res, next) => {
         error.status = 400
         return next(error)
       }
-      if(!user) {
+      if(!driver) {
         let error = new Error(info.message || 'An error occured during sigup')
         error.status = 400
         return next(error)
       }
 
-      const { email, id } = user
+      const { email, id } = driver
       const payload = { email, id}
       const token = jwtSign(payload)
       const message = JSON.stringify(info)
 
-      return res.json({user, token, message})
+      return res.json({driver, token, message})
 
     }catch(e) {
       return next(e)

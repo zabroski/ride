@@ -1,6 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const { User } = require('../models/index.js')
+const { Driver } = require('../models/index.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -18,10 +18,10 @@ passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
 }, async(token, done) => {
     try {
-        const user = await User.findByPk(token.id)
+        const driver = await Driver.findByPk(token.id)
 
-        if(user) {
-            done(null, user)
+        if(driver) {
+            done(null, driver)
         }
         else {
             done(null. false)
@@ -38,25 +38,26 @@ passport.use('login', new LocalStrategy({
 }, async (email, password, done) => {
   try {
     // find user by their email
-    const user = await User.findOne({ where: { email: email }})
-    console.log(user)
-    console.log(`*** user: ${user} ***`)
+    var driver = await Driver.findOne({ where: { email: email }})
+    console.log(driver)
+    console.log(`*** user: ${driver} ***`)
 
-    if (!user) {
+    if (!driver) {
       return done(null, false, { message: 'User not found'})
     }
 
+
     // compare passwords
-    const validate = await bcrypt.compare(password, user.password);
+    const validate = await bcrypt.compare(password, driver.password);
     console.log(`*** validate: ${validate} ***`)
-    console.log(password, user.password)
+    console.log(password, driver.password)
 
     if (!validate) {
       return done(null, false, { message: 'Wrong password'})
     }
 
     // login was a success, return the user object
-    return done(null, user, { message: 'Logged in successfully'})
+    return done(null, driver, { message: 'Logged in successfully'})
 
   } catch(error) {
     return done(error)
@@ -72,7 +73,7 @@ passport.use('signup', new LocalStrategy({
         console.log(req)
         const { body: { name } } = req
 
-        const user = await User.create({
+        const user = await Driver.create({
             name: name,
             email: email,
             password: password
